@@ -55,6 +55,7 @@ RUN set -eux; \
     && mv composer.phar /usr/local/bin/composer \
     && composer self-update --clean-backups \
 # Clear dev deps
+    && rm -rf /tmp/pear \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
