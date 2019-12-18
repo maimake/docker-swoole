@@ -15,7 +15,7 @@ ENV APP_ENV=${app_env:-"prod"} \
 RUN set -eux; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-        curl zip unzip git wget openssl \
+        iputils-ping net-tools curl zip unzip git wget openssl \
         librdkafka-dev \
         libz-dev \
         libssl-dev \
