@@ -16,7 +16,7 @@ ENV APP_ENV=${app_env:-"prod"} \
 
 # Timezone
 RUN set -eux; \
-    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "${TIMEZONE}" > /etc/timezone \
     && echo "[Date]\ndate.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
 
@@ -42,7 +42,7 @@ RUN set -eux; \
 
 # Install PHP extensions
 RUN set -eux; \
-    && docker-php-ext-install \
+    docker-php-ext-install \
         pdo_mysql sockets mysqli gd pcntl \
 # Install redis extension
     && pecl install redis \
