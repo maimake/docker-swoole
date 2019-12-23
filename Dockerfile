@@ -4,14 +4,24 @@ MAINTAINER maimake <yshxinjian@gmail.com>
 
 # --build-arg timezone=Asia/Shanghai
 ARG timezone
-# app env: prod pre test dev
+# app_env: prod pre test dev
 ARG app_env=prod
+
 
 ENV APP_ENV=${app_env:-"prod"} \
     TIMEZONE=${timezone:-"Asia/Shanghai"} \
     SWOOLE_VERSION=4.4.12 \
     COMPOSER_ALLOW_SUPERUSER=1
 
+
+# Timezone
+RUN set -eux; \
+    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    && echo "${TIMEZONE}" > /etc/timezone \
+    && echo "[Date]\ndate.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
+
+
+# apt-get install
 RUN set -eux; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -24,7 +34,14 @@ RUN set -eux; \
         libjpeg-dev \
         libpng-dev \
         libfreetype6-dev \
+# Clear dev deps
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
+
+
 # Install PHP extensions
+RUN set -eux; \
     && docker-php-ext-install \
         pdo_mysql sockets mysqli gd pcntl \
 # Install redis extension
@@ -55,13 +72,6 @@ RUN set -eux; \
     && mv composer.phar /usr/local/bin/composer \
     && composer self-update --clean-backups \
 # Clear dev deps
-    && rm -rf /tmp/pear \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean \
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-# Timezone
-    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
-    && echo "${TIMEZONE}" > /etc/timezone \
-    && echo "[Date]\ndate.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
+    && rm -rf /tmp/pear
 
 
