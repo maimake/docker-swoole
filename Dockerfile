@@ -74,4 +74,13 @@ RUN set -eux; \
 # Clear dev deps
     && rm -rf /tmp/pear
 
+# Install hiredis
+RUN set -eux; \
+    mkdir -p /opt/hiredis \
+    && wget -O /opt/hiredis.tar.gz https://github.com/redis/hiredis/archive/v0.14.0.tar.gz \
+    && tar -xzvf /opt/hiredis.tar.gz --strip-components 1 -C /opt/hiredis \
+    && cd /opt/hiredis \
+    && make && make install && ldconfig \
+    && cd / && rm -Rf /opt/hiredis*
+
 

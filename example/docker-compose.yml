@@ -1,0 +1,17 @@
+version: '3'
+services:
+  php:
+    build:
+      context: ..
+    volumes:
+      - $PWD:/app
+    links:
+      - redis
+    depends_on:
+      - redis
+    working_dir: /app
+    command: ['php', 'index.php']
+
+  redis:
+    image: redis
+    command: redis-server --requirepass 123456
