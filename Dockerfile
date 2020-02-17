@@ -25,7 +25,7 @@ RUN set -eux; \
 RUN set -eux; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-        iputils-ping telnet net-tools curl zip unzip git wget openssl \
+        iputils-ping telnet net-tools curl zip unzip git wget openssl procps\
         librdkafka-dev \
         libz-dev \
         libssl-dev \
