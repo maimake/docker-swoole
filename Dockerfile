@@ -27,6 +27,7 @@ RUN set -eux; \
     && apt-get install -y --no-install-recommends \
         iputils-ping telnet net-tools curl zip unzip git wget openssl procps\
         librdkafka-dev \
+        libzip-dev \
         libz-dev \
         libssl-dev \
         libnghttp2-dev \
@@ -43,7 +44,7 @@ RUN set -eux; \
 # Install PHP extensions
 RUN set -eux; \
     docker-php-ext-install \
-        pdo_mysql sockets mysqli gd pcntl \
+        pdo_mysql sockets mysqli gd pcntl zip \
 # Install redis extension
     && pecl install redis \
     && docker-php-ext-enable redis \
