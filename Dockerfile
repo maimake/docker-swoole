@@ -10,7 +10,7 @@ ARG app_env=prod
 
 ENV APP_ENV=${app_env:-"prod"} \
     TIMEZONE=${timezone:-"Asia/Shanghai"} \
-    SWOOLE_VERSION=4.4.12 \
+    SWOOLE_VERSION=4.4.17 \
     COMPOSER_ALLOW_SUPERUSER=1
 
 
